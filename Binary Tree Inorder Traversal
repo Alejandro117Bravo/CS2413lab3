@@ -1,0 +1,28 @@
+#include <stdlib.h>
+
+
+int* inorderTraversal(struct TreeNode* root, int* returnSize) {
+    int* result = (int*)malloc(sizeof(int) * 100); // max 100 nodes
+    struct TreeNode** stack = (struct TreeNode**)malloc(sizeof(struct TreeNode*) * 100);
+    int top = -1, idx = 0;
+    struct TreeNode* curr = root;
+
+    while (curr != NULL || top != -1) {
+        
+        while (curr != NULL) {
+            stack[++top] = curr;
+            curr = curr->left;
+        }
+
+        
+        curr = stack[top--];
+        result[idx++] = curr->val;
+
+        
+        curr = curr->right;
+    }
+
+    *returnSize = idx;
+    free(stack);
+    return result;
+}
