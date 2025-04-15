@@ -1,0 +1,33 @@
+#include <stdlib.h>
+
+
+int* preorderTraversal(struct TreeNode* root, int* returnSize) {
+    if (!root) {
+        *returnSize = 0;
+        return NULL;
+    }
+
+    int* result = (int*)malloc(sizeof(int) * 100); 
+    struct TreeNode** stack = (struct TreeNode**)malloc(sizeof(struct TreeNode*) * 100);
+    int top = -1;
+    int idx = 0;
+
+    stack[++top] = root;
+
+    while (top >= 0) {
+        struct TreeNode* node = stack[top--];
+        result[idx++] = node->val;
+
+        if (node->right) {
+            stack[++top] = node->right;
+        }
+
+        if (node->left) {
+            stack[++top] = node->left;
+        }
+    }
+
+    *returnSize = idx;
+    free(stack);
+    return result;
+}
